@@ -4,6 +4,7 @@ import { Divider, Text } from 'react-native-paper';
 import { GedungViewMaxHeight } from '../../../helpers/utils';
 import Breadcrumb from '../../../components/Breadcrumb';
 import TextDisplay3 from '../../../components/Text/Thypography/TextDisplay3';
+import ButtonAdd from '../../../components/ButtonAdd';
 
 const JurusanProdi = () => {
   // const { height: dimensionsHeight } = useWindowDimensions();
@@ -36,7 +37,12 @@ const JurusanProdi = () => {
               ]}
             />
           </View>
-          <TextDisplay3>Jurusan Prodi</TextDisplay3>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <TextDisplay3>Jurusan Prodi</TextDisplay3>
+            <ButtonAdd
+              onPress={() => {}}
+            />
+          </View>
           <View style={{ paddingVertical: 20 }}>
             <Divider />
           </View>
