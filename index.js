@@ -64,6 +64,10 @@ const JurusanProdi = () => {
     }
   };
 
+  React.useEffect(() => {
+    _fetchData();
+  }, [route.params]);
+
   return (
     <View style={{ maxHeight: GedungViewMaxHeight(dimensions.height) }}>
       <ScrollView>
