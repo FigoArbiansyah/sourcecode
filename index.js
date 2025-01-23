@@ -11,6 +11,8 @@ import ShimmerElement from '../../../components/ShimmerElement';
 import Item from './components/ListTable/Item';
 import ModalForm from './ModalForm';
 import authSelector from '../../../store/selectors/auth';
+import { API_ENDPOINTS } from '../../../helpers/constants';
+import ApiRequest from '../../../helpers/apiRequest';
 
 const JurusanProdi = () => {
   // const { height: dimensionsHeight } = useWindowDimensions();
@@ -22,6 +24,45 @@ const JurusanProdi = () => {
   const [formIsOpen, setFormIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const auth = useSelector(authSelector);
+
+  const _fetchData = async () => {
+    setLoading(true);
+    try {
+      const headers = {
+        Authorization: `Bearer ${auth?.data?.token}`,
+      };
+
+      let url = `${API_ENDPOINTS.personnels}/study-programs?page=${
+        route?.params?.page ?? 1
+      }`;
+      if (route?.params?.per_page) {
+        url += `&per_page=${route?.params?.per_page}`;
+      }
+      if (route?.params?.q) {
+        url += `&q=${route?.params?.q}`;
+      }
+      if (route?.params?.status && ['active', 'inactive']?.includes(route?.params?.status)) {
+        url += `&status=${route?.params?.status}`;
+      }
+
+      const request = await ApiRequest.get(url, headers);
+      if (request && request.status === 200) {
+        const response = await request.json();
+
+        console.log('testingggggg', response);
+        setData(response.results);
+        setMetadata(response?.metadata);
+      } else {
+        throw Error();
+      }
+    } catch (e) {
+      console.log('e', e);
+      setData([]);
+      setMetadata();
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={{ maxHeight: GedungViewMaxHeight(dimensions.height) }}>
